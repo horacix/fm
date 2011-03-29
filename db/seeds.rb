@@ -5,7 +5,7 @@
 #
 #   cities = City.create([{ :name => 'Chicago' }, { :name => 'Copenhagen' }])
 #   Mayor.create(:name => 'Daley', :city => cities.first)
-Administrator.create(:id => 96767630, :name => 'BANCHILE')
-Administrator.create(:id => 96514410, :name => 'BICE')
-Administrator.create(:id => 96667040, :name => 'SANTANDER ASSET MANAGEMENT')
-Administrator.create(:id => 91999000, :name => 'PRINCIPAL')
+Administrator.create(:code => 96767630, :name => 'BANCHILE')
+Administrator.create(:code => 96514410, :name => 'BICE')
+Administrator.create(:code => 96667040, :name => 'SANTANDER ASSET MANAGEMENT')
+Administrator.create(:code => 91999000, :name => 'PRINCIPAL')

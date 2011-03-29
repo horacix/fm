@@ -1,7 +1,7 @@
 class CreateAdministrators < ActiveRecord::Migration
   def self.up
     create_table :administrators do |t|
-      t.integer :id
+      t.integer :code
       t.string :name
 
       t.timestamps
