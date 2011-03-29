@@ -7,3 +7,4 @@ class SpecificFund < ActiveRecord::Base
     quotes.create(:date => date, :quote => quote)
   end
 end
+

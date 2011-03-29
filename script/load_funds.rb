@@ -11,18 +11,10 @@ def load_fund(adm, run, fondo)
     serie = 'UNICA'
   end
   puts "#{nombre}/#{serie}"
-  f = adm.funds.create(:run => split_run[0], :run_dv => split_run[1], :name => nombre)
-  if f.id.nil?
-    f = adm.funds.where(:run=> split_run[0]).first
-  end
-  s = f.series.create(:name => serie)
-  if s.id.nil?
-    s = Series.where(:name => serie).first
-    sf = f.specific_funds.create(:series_id => s)
-  else
-    sf = SpecificFund.where(:fund_id => f, :series_id => s).first
-  end
-  
+  f = adm.funds.find_or_create_by_run_and_run_dv_and_name(split_run[0], split_run[1], nombre)
+  s = Series.find_or_create_by_name(serie)
+  sf = f.specific_funds.find_or_create_by_series_id(s.id)
+
   return sf
 end
 
