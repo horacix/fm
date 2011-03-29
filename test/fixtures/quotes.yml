@@ -1,0 +1,11 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  specific_fund_id: 1
+  date: 2011-03-28
+  quote: 9.99
+
+two:
+  specific_fund_id: 1
+  date: 2011-03-28
+  quote: 9.99

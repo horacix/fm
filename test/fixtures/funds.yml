@@ -1,0 +1,11 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  run: 1
+  run_dv: 1
+  name: MyString
+
+two:
+  run: 1
+  run_dv: 1
+  name: MyString
