@@ -1,9 +1,9 @@
 require 'spreadsheet'
 require 'open-uri'
 
-def load_fund(adm, run, fondo)
-  split_run = run.split('-')
-  if fondo =~ /^(.*) ([^ ]+)$/
+def load_fund(adm, run, fondo, tipo)
+  fondo.delete! '(*)'
+  if fondo =~ /^(.*) ([^ ]+)  $/
     nombre = $1
     serie = $2
   else
@@ -11,31 +11,38 @@ def load_fund(adm, run, fondo)
     serie = 'UNICA'
   end
   puts "#{nombre}/#{serie}"
+
+  split_run = run.split('-')
   f = adm.funds.find_or_create_by_run_and_run_dv_and_name(split_run[0], split_run[1], nombre)
-  s = Series.find_or_create_by_name(serie)
+  if f.fund_type.nil?
+    f.fund_type = FundType.find_or_create_by_name(tipo)
+    f.save!
+  end
+  s = adm.series.find_or_create_by_name(serie)
   sf = f.specific_funds.find_or_create_by_series_id(s.id)
 
   return sf
 end
 
-Time::DATE_FORMATS[:query] = "%Y%m%d"
-adm = Administrator.first
-date = 2.day.ago
-s_date = date.to_s(:query)
-puts 'Administradora: ' + adm.name, 'Fecha: ' + s_date
-url = "http://www.aafm.cl/tecnoera/index.php?clase=informe&metodo=rentabilidad_excel&adm=#{adm.code}&tipo=&inv=&fecha=#{s_date}"
+date = 2.day.ago.to_date
+url = "http://www.aafm.cl/estadisticas_publico/resumen_excel.php?dia=#{date.day}&mes=#{date.month}&anio=#{date.year}"
 
 doc = open(url)
 book = Spreadsheet.open(doc)
 sheet = book.worksheet 0
-sheet.each 12 do |row|
-  a = row[0]
-  if a.eql?(adm.name)
-    run = row[1]
-    fondo = row[2]
-    cuota = row[3]
-    specific_fund = load_fund(adm, run, fondo)
-    specific_fund.save_quote(date, cuota)
+
+Administrator.all.each do |adm|
+  puts 'Administradora: ' + adm.name, 'Fecha: ' + date
+  sheet.each 12 do |row|
+    a = row[0]
+    if a.eql?(adm.name)
+      run = row[1]
+      fondo = row[2]
+      cuota = row[6]
+      tipo = row[8]
+      specific_fund = load_fund(adm, run, fondo, tipo)
+      specific_fund.save_quote(date, cuota)
+    end
   end
 end
 
