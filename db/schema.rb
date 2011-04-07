@@ -10,11 +10,21 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110329233030) do
+ActiveRecord::Schema.define(:version => 20110401225751) do
 
   create_table "administrators", :force => true do |t|
     t.integer  "code"
     t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "fund_performances", :force => true do |t|
+    t.integer  "specific_fund_id"
+    t.date     "calculation_date"
+    t.integer  "period"
+    t.string   "period_type"
+    t.decimal  "rate",             :precision => 10, :scale => 0
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -38,7 +48,7 @@ ActiveRecord::Schema.define(:version => 20110329233030) do
   create_table "quotes", :force => true do |t|
     t.integer  "specific_fund_id"
     t.date     "date"
-    t.decimal  "quote"
+    t.decimal  "quote",            :precision => 10, :scale => 0
     t.datetime "created_at"
     t.datetime "updated_at"
   end

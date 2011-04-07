@@ -29,10 +29,11 @@ url = "http://www.aafm.cl/estadisticas_publico/resumen_excel.php?dia=#{date.day}
 
 doc = open(url)
 book = Spreadsheet.open(doc)
+Spreadsheet.client_encoding = book.encoding
 sheet = book.worksheet 0
 
 Administrator.all.each do |adm|
-  puts 'Administradora: ' + adm.name, 'Fecha: ' + date
+  puts 'Administradora: ' + adm.name, 'Fecha: ' + date.to_s
   sheet.each 12 do |row|
     a = row[0]
     if a.eql?(adm.name)

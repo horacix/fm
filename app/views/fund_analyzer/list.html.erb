@@ -1,0 +1,34 @@
+<% content_for :javascript do %>
+<%= javascript_tag do %>
+// Sorting the list
+
+$(document).ready(function(){
+$('#specific_funds').sortable({
+axis: 'y',
+dropOnEmpty: false,
+handle: '.handle',
+cursor: 'crosshair',
+items: 'li',
+opacity: 0.4,
+scroll: true,
+update: function(){
+$.ajax({
+type: 'post',
+data: $('#specific_funds').sortable('serialize'),
+dataType: 'script',
+complete: function(request){
+$('#specific_funds').effect('highlight');
+},
+url: '/fund_analyzer/sort'})
+}
+});
+});
+<% end %>
+<% end %>
+
+<h1>Listing funds</h1>
+<ul id="specific_funds"> <% @funds.each do |fund| %>
+  <li id="fund_<%= fund.id %>"><span class="handle">[drag]</span><%= fund.fund.name %> <%= fund.series.name %> | <%= fund.year_performance(5) %> | <%= fund.year_performance(3) %> | <%= fund.year_performance(1) %></li>
+<% end %></ul>
+<!--%= link_to 'New book', new_book_path %-->
+

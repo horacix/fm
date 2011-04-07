@@ -1,0 +1,2 @@
+module FundAnalyzerHelper
+end

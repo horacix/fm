@@ -27,8 +27,16 @@ def load_fund(adm, run, fondo)
 end
 
 adm = Administrator.find_by_name(ARGV[0])
+from = 5.year.ago.to_date
+unless ARGV[1].nil?
+  from = Date.parse(ARGV[1])
+end
+to = 1.day.ago.to_date
+unless ARGV[2].nil?
+  to = Date.parse(ARGV[2])
+end
 
-5.year.ago.to_date.upto(2.day.ago.to_date) do |date|
+from.upto(to) do |date|
   puts adm.name + '/' + date.to_s
   s_date = date.to_s.delete("-")
   url = "http://www.aafm.cl/tecnoera/index.php?clase=informe&metodo=rentabilidad_excel&adm=#{adm.code}&tipo=&inv=&fecha=#{s_date}"

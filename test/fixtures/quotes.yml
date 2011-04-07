@@ -1,3 +1,16 @@
+# == Schema Information
+# Schema version: 20110329233030
+#
+# Table name: quotes
+#
+#  id               :integer(4)      not null, primary key
+#  specific_fund_id :integer(4)
+#  date             :date
+#  quote            :integer(10)
+#  created_at       :datetime
+#  updated_at       :datetime
+#
+
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
 
 one:

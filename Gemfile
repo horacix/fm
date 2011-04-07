@@ -5,9 +5,14 @@ gem 'rails', '3.0.3'
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
-gem 'sqlite3-ruby', :require => 'sqlite3'
-gem 'nokogiri'
-gem 'spreadsheet'
+gem 'mysql2'
+
+group :development do
+  gem 'sqlite3-ruby', :require => 'sqlite3'
+  gem 'spreadsheet'
+  gem 'rspec-rails', '2.2.1'
+  gem 'annotate-models'
+end
 
 # Use unicorn as the web server
 # gem 'unicorn'
@@ -31,3 +36,4 @@ gem 'spreadsheet'
 # group :development, :test do
 #   gem 'webrat'
 # end
+
